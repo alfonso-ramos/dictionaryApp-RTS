@@ -18,47 +18,47 @@ const MeaningSchema = object({
     definitions: array(DefinitionSchema)
 });
 
+
 const WordSchema = object({
     word: string(),
     phonetics: array(PhoneticSchema),
     meanings: array(MeaningSchema),
+    sourceUrls: array(string())
 })
 
-const initialState = {
-    word: '',
-    phonetics: [
-
-    ],
-    meanings: [{
-        partOfSpeech: 'noun',
-}       
-    ]
-}
+const initialState: InferOutput<typeof WordSchema> = {
+    word: 'Keyboard',
+    phonetics: [{
+        audio: "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3",
+        text: "/ˈkibɔɹd/"
+    }],
+    meanings: [],
+    sourceUrls: []
+};
 
 
 export type Definition = InferOutput<typeof WordSchema>
 
 export const useDictionary = () => {
-    const [definition, setDefintion] = useState<Definition>()
+    const [word, setWord] = useState<Definition>(initialState)
     const [loading, setLoading] = useState(false)
     const [notFound, setNotFound] = useState(false)
 
     const fetchDictionary = async (word: string) => {
         try {
             setLoading(true)
+            setNotFound(false)
             const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
             const { data } = await axios(URL)
-            if (!data[0]) {
+            if (!data || !data[0]) {
                 setNotFound(true)
                 return
             }
 
-            const { data: definitionResults } = await axios(URL)
-            console.log(definitionResults[0])
-            const result = parse(WordSchema, definitionResults[0])
+            const result = parse(WordSchema, data[0])
             console.log(result)
             if (result) {
-                setDefintion(result)
+                setWord(result)
             } else {
                 console.error('Respuesta mal formada ...')
             }
@@ -67,9 +67,11 @@ export const useDictionary = () => {
         } finally {
             setLoading(false)
         }
+        console.log(word)
+        
     }
     return {
-        definition,
+        word,
         loading,
         notFound,
         fetchDictionary
