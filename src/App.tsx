@@ -22,7 +22,7 @@ function App() {
     setSearchWord(e.target.value);
   };
   return (
-    <>
+    <div className="mx-auto px-6">
       <header className="flex justify-around">
         <img src="/public/assets/images/logo.svg" alt="logo" />
         <div>
@@ -34,7 +34,10 @@ function App() {
           <p>switchcolor</p>
         </div>
       </header>
-      <hr />
+
+      
+
+
       <input
         type="text"
         value={searchWord}
@@ -42,34 +45,44 @@ function App() {
         placeholder="Introduce una palabra"
       />
       <button onClick={handleSearch}>Buscar</button>
-      <div>
-        <div></div>
+
+
+      
+      <div className="flex border-2 justify-between border-red-600">
+        <div>
+          <h1 className="font-bold text-3xl">{word.word}</h1>
+          <h1>{phonetic?.text}</h1>
+        </div>
         <button
           onClick={() => playAudio(phonetic?.audio!)}
-          className="bg-purple-600 rounded-full"
-        >
+          className="bg-purple-600 rounded-full">
           <img src="/public/assets/images/icon-play.svg" alt="" />
         </button>
       </div>
 
-      <h1>{word.word}</h1>
-      <h1>{phonetic?.text}</h1>
+      
 
       {
         word.meanings.map(meaning => (
           <>
-            <p>{meaning.partOfSpeech}</p>
+            <div className="flex">
+              <p>{meaning.partOfSpeech}</p>
+              <div className=" w-full border-b border-gray-900"></div>
+            </div>
             <p>Meaning</p>
-            <ul>
+            <ul className="list-disc marker:text-purple-500 ml-7">
               {meaning.definitions.map(e => (
                 <li>{e.definition}</li>
               ))}
             </ul>
+            {word.meanings.map(s => (
+              <p className="text-purple-500">synonyms: {s.synonyms}</p>
+            ))}
           </>
         ))
       }
       <p>{word.sourceUrls}</p>
-    </>
+    </div>
   );
 }
 

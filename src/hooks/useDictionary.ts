@@ -15,7 +15,8 @@ const DefinitionSchema = object({
 
 const MeaningSchema = object({
     partOfSpeech: string(),
-    definitions: array(DefinitionSchema)
+    definitions: array(DefinitionSchema),
+    synonyms: array(string())
 });
 
 
@@ -33,7 +34,7 @@ const initialState: InferOutput<typeof WordSchema> = {
         text: "/ˈkibɔɹd/"
     }],
     meanings: [],
-    sourceUrls: []
+    sourceUrls: [],
 };
 
 
