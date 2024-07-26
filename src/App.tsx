@@ -73,28 +73,40 @@ function App() {
       {notFound && <p>Word not found.</p>}
       {error && <p>{error}</p>}
 
-      {word && (
-        <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
-      )}
+      <div className="max-w-[736px] mx-auto">
+        {word && (
+          <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
+        )}
 
-      {word?.meanings?.map((meaning, index) => (
-        <div key={index}>
-          <div className="flex">
-            <p>{meaning.partOfSpeech}</p>
-            <div className="w-full border-b border-gray-900"></div>
+        {word?.meanings?.map((meaning, index) => (
+          <div key={index}>
+            <div className="flex">
+              <p>{meaning.partOfSpeech}</p>
+              <div className="w-full border-b border-gray-900"></div>
+            </div>
+            <p>Meaning</p>
+            <ul className="list-disc marker:text-purple-500 ml-7">
+              {meaning.definitions.map((def, defIndex) => (
+                <li key={defIndex}>{def.definition}</li>
+              ))}
+            </ul>
+            {synonym && (
+              <p className="text-purple-500">{synonym.synonyms.join(", ")}</p>
+            )}
           </div>
-          <p>Meaning</p>
-          <ul className="list-disc marker:text-purple-500 ml-7">
-            {meaning.definitions.map((def, defIndex) => (
-              <li key={defIndex}>{def.definition}</li>
-            ))}
-          </ul>
-          {synonym && <p className="text-purple-500">{synonym.synonyms.join(", ")}</p>}
-        </div>
-      ))}
-      {word?.sourceUrls && (
-        <p><a href={word.sourceUrls[0]} target="_blank" rel="noopener noreferrer">Source</a></p>
-      )}
+        ))}
+        {word?.sourceUrls && (
+          <p>
+            <a
+              href={word.sourceUrls[0]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source
+            </a>
+          </p>
+        )}
+      </div>
     </div>
   );
 }
