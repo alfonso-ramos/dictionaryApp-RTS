@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useDictionary } from "./hooks/useDictionary";
 import Header from "./components/Header";
 import WordDisplay from "./components/WordDisplay";
+import SearchInput from "./components/SearchInput";
 
 function App() {
   const [theme, setTheme] = useState(true);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const changeTheme = () => {
     setTheme(!theme);
@@ -35,6 +37,7 @@ function App() {
   const handleSearch = () => {
     if (searchWord.trim()) {
       fetchDictionary(searchWord);
+      setHasSearched(true);
     }
   };
 
@@ -52,19 +55,19 @@ function App() {
     <div className="mx-auto px-6">
       <Header theme={theme} changeTheme={changeTheme} />
 
-      <div className="max-w-[736px] mx-auto bg-gray-300 flex p-2">
-        <input
-          type="text"
-          value={searchWord}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          placeholder="Introduce una palabra"
-          className="w-full bg-none h-[16] rounded-xl"
-        />
-        <button onClick={handleSearch}>
-          <img src="/public/assets/images/icon-search.svg" alt="Buscar" />
-        </button>
-      </div>
+      <SearchInput
+        value={searchWord}
+        onChange={handleInputChange}
+        onSearch={handleSearch}
+        onKeyPress={handleKeyPress}
+      />
+
+      {!hasSearched && !loading && (
+        <div className="mt-6 text-center text-gray-700">
+          <p>Welcome to the Dictionary App!</p>
+          <p>Please enter a word to search.</p>
+        </div>
+      )}
 
       {loading && <p>Loading...</p>}
       {notFound && <p>Word not found.</p>}

@@ -26,22 +26,22 @@ export const WordSchema = object({
     sourceUrls: array(string()),
 });
 
-const initialState: InferOutput<typeof WordSchema> = {
-    word: "Keyboard",
-    phonetics: [
-        {
-            audio: "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3",
-            text: "/ˈkibɔɹd/",
-        },
-    ],
-    meanings: [],
-    sourceUrls: [],
-};
+// const initialState: InferOutput<typeof WordSchema> = {
+//     word: "",
+//     phonetics: [
+//         {
+//             audio: "",
+//             text: "",
+//         },
+//     ],
+//     meanings: [],
+//     sourceUrls: [],
+// };
 
 export type Definition = InferOutput<typeof WordSchema>;
 
 export const useDictionary = () => {
-    const [word, setWord] = useState<Definition>(initialState);
+    const [word, setWord] = useState<Definition>();
     const [loading, setLoading] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState<string | null>(null);
