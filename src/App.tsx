@@ -6,10 +6,14 @@ import SearchInput from "./components/SearchInput";
 
 function App() {
   const [theme, setTheme] = useState(true);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [font, setFont] = useState("font-sans");
 
   const changeTheme = () => {
     setTheme(!theme);
+  };
+
+  const changeFont = (font: string) => {
+    setFont(font);
   };
 
   useEffect(() => {
@@ -37,7 +41,6 @@ function App() {
   const handleSearch = () => {
     if (searchWord.trim()) {
       fetchDictionary(searchWord);
-      setHasSearched(true);
     }
   };
 
@@ -52,8 +55,8 @@ function App() {
   };
 
   return (
-    <div className="mx-auto px-6">
-      <Header theme={theme} changeTheme={changeTheme} />
+    <div className={`mx-auto px-6 ${font}`}>
+      <Header theme={theme} changeTheme={changeTheme} changeFont={changeFont} />
 
       <SearchInput
         value={searchWord}
@@ -62,7 +65,7 @@ function App() {
         onKeyPress={handleKeyPress}
       />
 
-      {!hasSearched && !loading && (
+      {!searchWord && !loading && (
         <div className="mt-6 text-center text-gray-700">
           <p>Welcome to the Dictionary App!</p>
           <p>Please enter a word to search.</p>
@@ -73,40 +76,32 @@ function App() {
       {notFound && <p>Word not found.</p>}
       {error && <p>{error}</p>}
 
-      <div className="max-w-[736px] mx-auto">
-        {word && (
-          <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
-        )}
+      {word && (
+        <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
+      )}
 
-        {word?.meanings?.map((meaning, index) => (
-          <div key={index}>
-            <div className="flex">
-              <p>{meaning.partOfSpeech}</p>
-              <div className="w-full border-b border-gray-900"></div>
-            </div>
-            <p>Meaning</p>
-            <ul className="list-disc marker:text-purple-500 ml-7">
-              {meaning.definitions.map((def, defIndex) => (
-                <li key={defIndex}>{def.definition}</li>
-              ))}
-            </ul>
-            {synonym && (
-              <p className="text-purple-500">{synonym.synonyms.join(", ")}</p>
-            )}
+      {word?.meanings?.map((meaning, index) => (
+        <div key={index}>
+          <div className="flex">
+            <p>{meaning.partOfSpeech}</p>
+            <div className="w-full border-b border-gray-900"></div>
           </div>
-        ))}
-        {word?.sourceUrls && (
-          <p>
-            <a
-              href={word.sourceUrls[0]}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Source
-            </a>
-          </p>
-        )}
-      </div>
+          <p>Meaning</p>
+          <ul className="list-disc marker:text-purple-500 ml-7">
+            {meaning.definitions.map((def, defIndex) => (
+              <li key={defIndex}>{def.definition}</li>
+            ))}
+          </ul>
+          {synonym && <p className="text-purple-500">{synonym.synonyms.join(", ")}</p>}
+        </div>
+      ))}
+      {word?.sourceUrls && (
+        <p>
+          <a href={word.sourceUrls[0]} target="_blank" rel="noopener noreferrer">
+            Source
+          </a>
+        </p>
+      )}
     </div>
   );
 }
