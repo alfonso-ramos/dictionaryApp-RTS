@@ -6,6 +6,7 @@ import SearchInput from "./components/SearchInput";
 import WelcomeMessage from "./components/WelcomeMessage";
 import WordDetails from "./components/WordDetails";
 import SourceLinks from "./components/SourceLinks";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -71,7 +72,7 @@ function App() {
 
       {!hasSearched && !loading && <WelcomeMessage />}
 
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner/>}
       {notFound && <p>Word not found.</p>}
       {error && <p>{error}</p>}
 

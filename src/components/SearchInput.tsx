@@ -9,14 +9,14 @@ type SearchInputProps = {
 
 const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, onSearch, onKeyPress }) => {
   return (
-    <div className="relative flex items-center max-w-[736px] mx-auto">
+    <div className="relative flex items-center max-w-[736px] mx-auto my-6">
       <input
         type="text"
         value={value}
         onChange={onChange}
         onKeyPress={onKeyPress}
         placeholder="Introduce una palabra"
-        className="w-full pl-4 pr-10 py-2 rounded-xl bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        className="w-full pl-4 pr-10 py-2 rounded-xl bg-[#1f1f1f] dark:bg-gray-200 text-gray-200 dark:text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
       />
       <img
         src="/public/assets/images/icon-search.svg"

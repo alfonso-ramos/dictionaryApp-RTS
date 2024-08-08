@@ -12,9 +12,9 @@ export default function WordDisplay({
   playAudio,
 }: WordDisplayProps) {
   return (
-    <div className="flex justify-between max-w-[736px] mx-auto">
+    <div className="flex justify-between  max-w-[736px] mx-auto mb-7">
       <div>
-        <h1 className="font-bold text-3xl">{word.word}</h1>
+        <h1 className="font-bold text-white dark:text-black text-3xl">{word.word}</h1>
         {phonetic && (
           <p className="text-purple-700 text-2xl">{phonetic.text}</p>
         )}
@@ -22,7 +22,7 @@ export default function WordDisplay({
       {phonetic?.audio && (
         <button
           onClick={() => playAudio(phonetic.audio)}
-          className="bg-purple-100 rounded-full"
+          className="bg-purple-100 rounded-full size-12"
           aria-label="Play pronunciation"
         >
           <img src="/public/assets/images/icon-play.svg" alt="Play" />
