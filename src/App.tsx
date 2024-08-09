@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDictionary } from "./hooks/useDictionary";
+import { ThemeProvider } from "./context/ThemeContext";
 import Header from "./components/Header";
 import WordDisplay from "./components/WordDisplay";
 import SearchInput from "./components/SearchInput";
@@ -9,81 +10,52 @@ import SourceLinks from "./components/SourceLinks";
 import Spinner from "./components/Spinner/Spinner";
 
 function App() {
-  const [theme, setTheme] = useState(true);
-  const [font, setFont] = useState("font-sans");
   const [hasSearched, setHasSearched] = useState(false);
-
-  const changeTheme = () => {
-    setTheme(!theme);
-  };
-
-  const changeFont = (font: string) => {
-    setFont(font);
-  };
-
-  useEffect(() => {
-    if (theme === false) {
-      document.querySelector("html")?.classList.add("dark");
-    } else {
-      document.querySelector("html")?.classList.remove("dark");
-    }
-  }, [theme]);
+  const [searchWord, setSearchWord] = useState("");
 
   const { word, fetchDictionary, loading, notFound, error } = useDictionary();
+
+  const handleSearch = () => {
+    if (!searchWord.trim()) return;
+    fetchDictionary(searchWord);
+    setHasSearched(true);
+  };
 
   const phonetic = word?.phonetics?.find(
     (phonetic) => phonetic.audio && phonetic.text
   );
 
   const playAudio = (url: string) => {
-    const audio = new Audio(url);
-    audio.play();
-  };
-
-  const [searchWord, setSearchWord] = useState("");
-
-  const handleSearch = () => {
-    if (searchWord.trim()) {
-      fetchDictionary(searchWord);
-      setHasSearched(true);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
+    new Audio(url).play();
   };
 
   return (
-    <div className={`mx-auto px-6 ${font}`}>
-      <Header theme={theme} changeTheme={changeTheme} changeFont={changeFont} />
+    <ThemeProvider>
+      <div className="mx-auto px-6">
+        <Header />
 
-      <SearchInput
-        value={searchWord}
-        onChange={handleInputChange}
-        onSearch={handleSearch}
-        onKeyPress={handleKeyPress}
-      />
+        <SearchInput
+          value={searchWord}
+          onChange={(e) => setSearchWord(e.target.value)}
+          onSearch={handleSearch}
+          onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+        />
 
-      {!hasSearched && !loading && <WelcomeMessage />}
+        {!hasSearched && !loading && <WelcomeMessage />}
 
-      {loading && <Spinner/>}
-      {notFound && <p>Word not found.</p>}
-      {error && <p>{error}</p>}
+        {loading && <Spinner />}
+        {notFound && <p>Word not found.</p>}
+        {error && <p>{error}</p>}
 
-      {word && (
-        <div className="max-w-[736px] mx-auto">
-          <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
-          <WordDetails meanings={word.meanings} />
-          <SourceLinks sourceUrls={word.sourceUrls} />
-        </div>
-      )}
-    </div>
+        {word && (
+          <div className="max-w-[736px] mx-auto">
+            <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
+            <WordDetails meanings={word.meanings} />
+            <SourceLinks sourceUrls={word.sourceUrls} />
+          </div>
+        )}
+      </div>
+    </ThemeProvider>
   );
 }
 
