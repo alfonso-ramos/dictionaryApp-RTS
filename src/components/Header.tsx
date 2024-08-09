@@ -10,7 +10,7 @@ export default function Header() {
             <div className="flex items-center">
                 <select
                     onChange={(e) => changeFont(e.target.value)}
-                    className="mr-4"
+                    className="mr-4 bg-transparent border-none focus:outline-none text-white dark:text-black"
                 >
                     <option value="font-sans">Sans-serif</option>
                     <option value="font-serif">Serif</option>

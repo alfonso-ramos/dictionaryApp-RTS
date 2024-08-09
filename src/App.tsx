@@ -8,6 +8,7 @@ import WelcomeMessage from "./components/WelcomeMessage";
 import WordDetails from "./components/WordDetails";
 import SourceLinks from "./components/SourceLinks";
 import Spinner from "./components/Spinner/Spinner";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [hasSearched, setHasSearched] = useState(false);
@@ -16,7 +17,6 @@ function App() {
   const { word, fetchDictionary, loading, notFound, error } = useDictionary();
 
   const handleSearch = () => {
-    if (!searchWord.trim()) return;
     fetchDictionary(searchWord);
     setHasSearched(true);
   };
@@ -38,18 +38,21 @@ function App() {
           value={searchWord}
           onChange={(e) => setSearchWord(e.target.value)}
           onSearch={handleSearch}
-          onKeyPress={(e) => e.key === "Enter" && handleSearch()}
         />
 
         {!hasSearched && !loading && <WelcomeMessage />}
 
         {loading && <Spinner />}
         {notFound && <p>Word not found.</p>}
-        {error && <p>{error}</p>}
+        {error && <NotFound />}
 
         {word && (
           <div className="max-w-[736px] mx-auto">
-            <WordDisplay word={word} phonetic={phonetic} playAudio={playAudio} />
+            <WordDisplay
+              word={word}
+              phonetic={phonetic}
+              playAudio={playAudio}
+            />
             <WordDetails meanings={word.meanings} />
             <SourceLinks sourceUrls={word.sourceUrls} />
           </div>
