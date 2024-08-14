@@ -14,7 +14,7 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
   const [searchWord, setSearchWord] = useState("");
 
-  const { word, fetchDictionary, loading, notFound, error } = useDictionary();
+  const { word, fetchDictionary, loading, error } = useDictionary();
 
   const handleSearch = () => {
     fetchDictionary(searchWord);
@@ -43,19 +43,21 @@ function App() {
         {!hasSearched && !loading && <WelcomeMessage />}
 
         {loading && <Spinner />}
-        {notFound && <p>Word not found.</p>}
-        {error && <NotFound />}
 
-        {word && (
-          <div className="max-w-[736px] mx-auto">
-            <WordDisplay
-              word={word}
-              phonetic={phonetic}
-              playAudio={playAudio}
-            />
-            <WordDetails meanings={word.meanings} />
-            <SourceLinks sourceUrls={word.sourceUrls} />
-          </div>
+        {error ? (
+          <NotFound />
+        ) : (
+          word && (
+            <div className="max-w-[736px] mx-auto">
+              <WordDisplay
+                word={word}
+                phonetic={phonetic}
+                playAudio={playAudio}
+              />
+              <WordDetails meanings={word.meanings} />
+              <SourceLinks sourceUrls={word.sourceUrls} />
+            </div>
+          )
         )}
       </div>
     </ThemeProvider>

@@ -26,18 +26,6 @@ export const WordSchema = object({
     sourceUrls: array(string()),
 });
 
-// const initialState: InferOutput<typeof WordSchema> = {
-//     word: "",
-//     phonetics: [
-//         {
-//             audio: "",
-//             text: "",
-//         },
-//     ],
-//     meanings: [],
-//     sourceUrls: [],
-// };
-
 export type Definition = InferOutput<typeof WordSchema>;
 
 export const useDictionary = () => {
