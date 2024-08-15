@@ -6,7 +6,7 @@ export default function Header() {
 
     return (
         <header className="flex justify-between mt-6 max-w-[736px] mx-auto">
-            <img src="/public/assets/images/logo.svg" alt="logo" />
+            <img src="/assets/images/logo.svg" alt="logo" />
             <div className="flex items-center">
                 <select
                     onChange={(e) => changeFont(e.target.value)}

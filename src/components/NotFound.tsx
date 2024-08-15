@@ -1,7 +1,7 @@
 export default function NotFound() {
   return (
     <div className="text-center max-w-[736px] mx-auto">
-      <img src="../../public/assets/images/confused-emoji.webp" className="size-16 mx-auto mt-32" alt="" />
+      <img src="/assets/images/confused-emoji.webp" className="size-16 mx-auto mt-32" alt="" />
       <p className="text-white dark:text-black font-semibold text-2xl mt-11">
         No Definitions Found
       </p>
