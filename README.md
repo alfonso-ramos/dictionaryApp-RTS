@@ -53,7 +53,6 @@ Users should be able to:
 - [HeadlessUI](https://headlessui.com/) - UI component library
 
 
-
 ## Author
 
 - Website - [ponchoramos.com](https://www.ponchoramos.com)
