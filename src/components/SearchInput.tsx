@@ -39,7 +39,7 @@ const SearchInput = ({ value, onChange, onSearch } : SearchInputProps) => {
           } bg-[#1f1f1f] dark:bg-gray-200 dark:text-black focus:outline-none focus:ring-2 focus:ring-purple-500`}
         />
         <img
-          src="/public/assets/images/icon-search.svg"
+          src="/assets/images/icon-search.svg"
           alt="Buscar"
           className="absolute right-6 top-1/2 transform -translate-y-1/2 w-5 h-5 cursor-pointer"
           onClick={() => {
