@@ -4,6 +4,7 @@ export default function WelcomeMessage() {
       <img src="/assets/images/waving-hand.png" className="size-20 mx-auto mt-32 " alt="" />
       <p className="font-semibold text-2xl mt-11 text-white dark:text-black">Welcome to the Dictionary App!</p>
       <p className="mt-6 text-[#757575] dark:text-black">Please enter a word to search.</p>
+      <p className="mt-6 text-[#757575] dark:text-black">Develop by <span className="text-purple-700">Alfonso Ramos</span> and <span className="text-purple-700">Raymond Estrada</span></p>i
     </div>
   );
 }
