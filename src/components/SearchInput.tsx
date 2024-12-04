@@ -33,7 +33,7 @@ const SearchInput = ({ value, onChange, onSearch } : SearchInputProps) => {
             }
           }}
           onKeyPress={handleKeyPress}
-          placeholder="Introduce una palabra"
+          placeholder="Ex. Keyboard"
           className={`w-full pl-6 pr-10 py-2 rounded-xl h-16 ${
             inputError ? "border-red-500 text-red-500" : "border-gray-300 text-gray-200"
           } bg-[#1f1f1f] dark:bg-gray-200 dark:text-black focus:outline-none focus:ring-2 focus:ring-purple-500`}
